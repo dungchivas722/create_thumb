@@ -1,0 +1,11 @@
+streamlit
+opencv-python
+stqdm
+streamlit-image-annotation
+streamlit_paste_button
+streamlit_text_label
+streamlit_antd_components
+Pillow==9.5.0
+rembg==2.0.50
+matplotlib
+tqdm

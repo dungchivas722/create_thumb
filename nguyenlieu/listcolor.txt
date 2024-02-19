@@ -1,0 +1,6 @@
+Black|#000000
+White|#FFFFFF
+Red|#FF0000
+Lime|#00FF00
+Blue|#0000FF
+Yellow|#FFFF00	

@@ -1,0 +1,3 @@
+
+type1|0,1,0,True,True,#ffffff,#00f143,#ffffff,#ff4466,#ff4466
+hbuj|0,1,1,True,True,#ffffff,#00f143,#ffffff,#ff4466,#ff4466
