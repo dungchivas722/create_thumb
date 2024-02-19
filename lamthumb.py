@@ -143,13 +143,30 @@ if __name__ == "__main__":
     else:
         name, link = listprofile
         link = link.split(',')
-        indexvitrianh,indexvitritext,indexvitrinhanmanh,indexvitriviengiua,indexvitrivienngoai,mau_anh,mau_text,mau_nhanmanh,mau_viengiua,mau_vienngoai = link
+        (indexvitrianh,indexvitritext,indexvitrinhanmanh,indexvitriviengiua,indexvitrivienngoai,mau_anh,mau_text,mau_nhanmanh,mau_viengiua,mau_vienngoai,value_font,
+         value_font_nhanmanh,value_kichthuoc_font,value_kichthuoc_font_nhanmanh,value_khoachcach_chu,value_khoachcach_chu_nhanmanh,value_mau_chu,value_mau_chu_nhanmanh,value_can_le_chu,value_can_le_chu_nhanmanh,value_gach_doc,value_gach_ngang,value_do_day_vien_giua,value_do_day_vien_ngoai,value_start_text,value_width_full_name,value_height_full_name,value_x_fullscreen,value_y_fullscreen,value_back_title_fullscreen) = link
+        # indexvitrianh,indexvitritext,indexvitrinhanmanh,indexvitriviengiua,indexvitrivienngoai,mau_anh,mau_text,mau_nhanmanh,mau_viengiua,mau_vienngoai = link
         #---------------------------------
         indexvitrianh = int(indexvitrianh)
         indexvitritext = int(indexvitritext)
         indexvitrinhanmanh = int(indexvitrinhanmanh)
         indexvitriviengiua = bool(indexvitriviengiua)
         indexvitrivienngoai = bool(indexvitrivienngoai)
+        value_kichthuoc_font = int(value_kichthuoc_font)
+        value_kichthuoc_font_nhanmanh = int(value_kichthuoc_font_nhanmanh)
+        value_khoachcach_chu = int(value_khoachcach_chu)
+        value_khoachcach_chu_nhanmanh = int(value_khoachcach_chu_nhanmanh)
+        value_gach_doc = int(value_gach_doc)
+        value_gach_ngang = int(value_gach_ngang)
+        value_do_day_vien_giua = int(value_do_day_vien_giua)
+        value_do_day_vien_ngoai = int(value_do_day_vien_ngoai)
+        value_start_text = int(value_start_text)
+        value_width_full_name = int(value_width_full_name)
+        value_height_full_name = int(value_height_full_name)
+        value_x_fullscreen = int(value_x_fullscreen)
+        value_y_fullscreen = int(value_y_fullscreen)
+        value_back_title_fullscreen = bool(value_back_title_fullscreen)
+        #---------------------------------
         # mau_anh ='-1'
         # mau_text = '#ff4466'
         # mau_nhanmanh = '-1'
@@ -241,37 +258,6 @@ if __name__ == "__main__":
                 st.session_state['mau_vienngoai'] = '-1'
 
         #---------------------------------------------------------------------------------------------------------------------------
-        colsaveprofile = st.columns([1, 1, 1,1])
-        if "name_profile" not in st.session_state:
-            st.session_state["name_profile"] = ""
-        ten_hop_le = True
-        with colsaveprofile[0]:
-            # save vao file config
-            name_profile = st.text_input("Type name profile",value=st.session_state["name_profile"])
-            for item in st.session_state['list_profile']:
-                item_check = item[0].strip().lower()
-                if name_profile.strip().lower() == item_check:
-                    with colsaveprofile[1]:
-                        st.error("Name profile already exists")
-                        ten_hop_le = False
-                        break
-                elif name_profile.strip().lower() == "":
-                    with colsaveprofile[1]:
-                        ten_hop_le = False
-                        st.error("Name profile is empty")
-                        break
-            if ten_hop_le:
-                with colsaveprofile[1]:
-                    st.success("Name profile is valid")
-                with colsaveprofile[2]:
-                    if st.button("Save profile", key=f"save_{name_profile}",use_container_width=True):
-                        with open('nguyenlieu/profile.txt', 'a') as f:
-                            f.write(f'\n{name_profile}|{vitrianh},{vitritext},{vitricaunhanmanh},{vitriviengiua},{vitrivienngoai},{st.session_state["mau_anh"]},{st.session_state["mau_text"]},{st.session_state["mau_nhanmanh"]},{st.session_state["mau_viengiua"]},{st.session_state["mau_vienngoai"]}')
-                        st.session_state['name_profile'] = ""
-                        st.session_state['list_profile'],st.session_state['list_profile_show'] = load_profile()
-                        for key in st.session_state:
-                            del st.session_state[key]
-                        st.experimental_rerun()
     #-------------------------------------------------------------------------------------------------------------------
     if vitrianh==0 and vitritext==1 and vitricaunhanmanh == 0:
         typeanh = 1
@@ -296,41 +282,58 @@ if __name__ == "__main__":
     colrenanh = st.columns([4, 4])
     with colrenanh[1]:
         colthuoctinhfont = st.columns([1, 1, 1, 1, 1])
+        Font_dem = 0
+        Font_nhan_manh_dem = 0
         with colthuoctinhfont[0]:
-            font_chu = st.selectbox("Font text", list_font)
-            font_chu_nhanmanh = st.selectbox("Font strong text", list_font)
+            for id,item in enumerate(list_font):
+                if item == value_font:
+                    Font_dem = id
+                if item == value_font_nhanmanh:
+                    Font_nhan_manh_dem = id
+
+
+            font_chu = st.selectbox("Font text", list_font,index=Font_dem)
+            if value_font_nhanmanh not in list_font:
+                value_font_nhanmanh = "arial.ttf"
+            font_chu_nhanmanh = st.selectbox("Font strong text", list_font,index=Font_nhan_manh_dem)
         with colthuoctinhfont[1]:
-            kichthuoc_font = st.number_input("Font size",min_value=20,max_value=1000,value=100,step=20)
-            kichthuoc_font_nhanmanh = st.number_input("Strong font size",min_value=20,max_value=1000,value=100,step=20)
+            kichthuoc_font = st.number_input("Font size",min_value=20,max_value=1000,step=20,value=value_kichthuoc_font)
+            kichthuoc_font_nhanmanh = st.number_input("Strong font size",min_value=20,max_value=1000,step=20,value=value_kichthuoc_font_nhanmanh)
         with colthuoctinhfont[2]:
-            khoachcach_chu = st.number_input("Space between text",min_value=0,max_value=1000,value=0,step=10)
-            khoachcach_chu_nhanmanh = st.number_input("Space between strong text",min_value=0,max_value=1000,value=0,step=10)
+            khoachcach_chu = st.number_input("Space between text",min_value=0,max_value=1000,step=10,value=value_khoachcach_chu)
+            khoachcach_chu_nhanmanh = st.number_input("Space between strong text",min_value=0,max_value=1000,step=10,value=value_khoachcach_chu_nhanmanh)
         with colthuoctinhfont[3]:
-            mau_chu = st.color_picker("Text color","#ffffff")
-            mau_chu_nhanmanh = st.color_picker("Strong text color","#ffffff")
+            mau_chu = st.color_picker("Text color",value=value_mau_chu)
+            mau_chu_nhanmanh = st.color_picker("Strong text color",value=value_mau_chu_nhanmanh)
+        list_can_le = ["left","center","right"]
+        for id,item in enumerate(list_can_le):
+            if item == value_can_le_chu:
+                value_can_le_chu = id
+            if item == value_can_le_chu_nhanmanh:
+                value_can_le_chu_nhanmanh = id
         with colthuoctinhfont[4]:
-            can_le_chu = st.selectbox("Text align",["left","center","right"])
-            can_le_chu_nhanmanh = st.selectbox("Strong text align",["left","center","right"])
+            can_le_chu = st.selectbox("Text align",["left","center","right"],index=value_can_le_chu)
+            can_le_chu_nhanmanh = st.selectbox("Strong text align",["left","center","right"],index=value_can_le_chu_nhanmanh)
         with colthuoctinhfont[0]:
-            gach_doc = st.number_input("Strikethrough RtoL", min_value=10, max_value=1920, value=600,step=50)
+            gach_doc = st.number_input("Strikethrough RtoL", min_value=10, max_value=1920,step=50, value=value_gach_doc)
         with colthuoctinhfont[1]:
-            gach_ngang = st.number_input("Underlined UPtoDown", min_value=10, max_value=1080, value=600,step=50)
+            gach_ngang = st.number_input("Underlined UPtoDown", min_value=10, max_value=1080,step=50, value=value_gach_ngang)
         with colthuoctinhfont[2]:
-            do_day_vien_giua = st.number_input("Middle border thickness", min_value=1, max_value=40, value=2)
+            do_day_vien_giua = st.number_input("Middle border thickness", min_value=1, max_value=40, value=value_do_day_vien_giua)
         with colthuoctinhfont[3]:
-            do_day_vien_ngoai = st.number_input("Outline thickness", min_value=1, max_value=40, value=2)
+            do_day_vien_ngoai = st.number_input("Outline thickness", min_value=1, max_value=40, value=value_do_day_vien_ngoai)
         with colthuoctinhfont[4]:
-            start_text = st.number_input("Start text", min_value=0, max_value=1920, value=0,step=10)
+            start_text = st.number_input("Start text", min_value=0, max_value=1920,step=10,value=value_start_text)
         st.divider()
         colfullscreen = st.columns([1, 1,1,1])
         with colfullscreen[0]:
-            width_full_name = st.number_input("Width of title for fullscreen", min_value=10, max_value=1920, value=600,step=50)
+            width_full_name = st.number_input("Width of title for fullscreen", min_value=10, max_value=1920,step=50, value=value_width_full_name)
         with colfullscreen[1]:
-            height_full_name = st.number_input("Height of title for fullscreen", min_value=10, max_value=1080, value=600,step=50)
+            height_full_name = st.number_input("Height of title for fullscreen", min_value=10, max_value=1080,step=50, value=value_height_full_name)
         with colfullscreen[2]:
-            x_fullscreen = st.number_input("Start x of title for fullscreen", min_value=0, max_value=1920, value=0,step=10)
+            x_fullscreen = st.number_input("Start x of title for fullscreen", min_value=0, max_value=1920,step=10, value=value_x_fullscreen)
         with colfullscreen[3]:
-            y_fullscreen = st.number_input("Start y of title for fullscreen", min_value=0, max_value=1080, value=0,step=10)
+            y_fullscreen = st.number_input("Start y of title for fullscreen", min_value=0, max_value=1080,step=10, value=value_y_fullscreen)
         back_title_fullscreen = sac.switch(label='Background title for fullscreen', align='center', size='md',value=False)
     if st.session_state['mau_anh'] == '-1':
         st.session_state['mau_anh'] = "#ffffff"
@@ -783,7 +786,54 @@ if __name__ == "__main__":
         img_thumb.save(buffer, format="PNG")
         buffer.seek(0)
         st.download_button(label="Download picture",data=buffer,file_name="thumbnail_clone_dun.png",mime="image/png")
-
+    colsaveprofile = st.columns([1, 1, 1, 1])
+    if "name_profile" not in st.session_state:
+        st.session_state["name_profile"] = ""
+    ten_hop_le = True
+    with colsaveprofile[0]:
+        # save vao file config
+        name_profile = st.text_input("Type name profile", value=st.session_state["name_profile"])
+        for item in st.session_state['list_profile']:
+            item_check = item[0].strip().lower()
+            if name_profile.strip().lower() == item_check:
+                with colsaveprofile[1]:
+                    st.error("Name profile already exists")
+                    ten_hop_le = False
+                    break
+            elif name_profile.strip().lower() == "":
+                with colsaveprofile[1]:
+                    ten_hop_le = False
+                    st.error("Name profile is empty")
+                    break
+        if ten_hop_le:
+            with colsaveprofile[1]:
+                st.success("Name profile is valid")
+            with colsaveprofile[2]:
+                if st.button("Save profile", key=f"save_{name_profile}", use_container_width=True):
+                    with open('nguyenlieu/profile.txt', 'a') as f:
+                        f.write(
+                            f'\n{name_profile}|{vitrianh},{vitritext},{vitricaunhanmanh},{vitriviengiua},{vitrivienngoai},'
+                            f'{st.session_state["mau_anh"]},{st.session_state["mau_text"]},{st.session_state["mau_nhanmanh"]}'
+                            f',{st.session_state["mau_viengiua"]},{st.session_state["mau_vienngoai"]},{font_chu},{font_chu_nhanmanh},{kichthuoc_font},'
+                            f'{kichthuoc_font_nhanmanh},{khoachcach_chu},{khoachcach_chu_nhanmanh},{mau_chu},{mau_chu_nhanmanh},{can_le_chu},{can_le_chu_nhanmanh},{gach_doc},{gach_ngang},{do_day_vien_giua},{do_day_vien_ngoai},{start_text},{width_full_name},{height_full_name},{x_fullscreen},{y_fullscreen},{back_title_fullscreen}')
+                    st.session_state['name_profile'] = ""
+                    st.session_state['list_profile'], st.session_state['list_profile_show'] = load_profile()
+                    for key in st.session_state:
+                        del st.session_state[key]
+                    st.experimental_rerun()
+        if st.button("Save value current to profile", key=f"save_{name_profile}_value", use_container_width=True):
+            st.session_state['list_profile'].pop(st.session_state['list_profile_show'].index(type))
+            with open('nguyenlieu/profile.txt', 'w') as f:
+                for item in st.session_state['list_profile']:
+                    f.write(f'\n{item[0]}|{item[1]}')
+            with open('nguyenlieu/profile.txt', 'a') as f:
+                f.write(
+                    f'\n{name}|{vitrianh},{vitritext},{vitricaunhanmanh},{vitriviengiua},{vitrivienngoai},'
+                    f'{st.session_state["mau_anh"]},{st.session_state["mau_text"]},{st.session_state["mau_nhanmanh"]}'
+                    f',{st.session_state["mau_viengiua"]},{st.session_state["mau_vienngoai"]},{font_chu},{font_chu_nhanmanh},{kichthuoc_font},'
+                    f'{kichthuoc_font_nhanmanh},{khoachcach_chu},{khoachcach_chu_nhanmanh},{mau_chu},{mau_chu_nhanmanh},{can_le_chu},{can_le_chu_nhanmanh},{gach_doc},{gach_ngang},{do_day_vien_giua},{do_day_vien_ngoai},{start_text},{width_full_name},{height_full_name},{x_fullscreen},{y_fullscreen},{back_title_fullscreen}')
+            st.session_state['list_profile'], st.session_state['list_profile_show'] = load_profile()
+            st.experimental_rerun()
 
 
 
