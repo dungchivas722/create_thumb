@@ -347,7 +347,7 @@ if __name__ == "__main__":
             if typeanh== 1:
                 # anh trai , text phai, nhan manh phia text
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((1920-gach_doc, 1080)))
                     img_thumb.paste(img_anh, (0, 0))
                 else:
@@ -430,7 +430,7 @@ if __name__ == "__main__":
             if typeanh==3:
                 # anh trai , text phai, khong nhan manh
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((1920-gach_doc, 1080)))
                     img_thumb.paste(img_anh, (0, 0))
                 else:
@@ -469,7 +469,7 @@ if __name__ == "__main__":
             if typeanh==2:
                 # anh trai , text phai, nhan manh all
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((1920-gach_doc, gach_ngang)))
                     img_thumb.paste(img_anh, (0, 0))
                 else:
@@ -551,7 +551,7 @@ if __name__ == "__main__":
             if typeanh==4:
                 # anh phai , text trai, nhan manh phia text
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if  (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((gach_doc, 1080)))
                     img_thumb.paste(img_anh, (1920-gach_doc, 0))
                 else:
@@ -633,7 +633,7 @@ if __name__ == "__main__":
             if typeanh==6:
              # anh phai , text trai, khong nhan manh
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((gach_doc, 1080)))
                     img_thumb.paste(img_anh, (1920-gach_doc, 0))
                 else:
@@ -670,7 +670,7 @@ if __name__ == "__main__":
             if typeanh==5:
                # anh phai , text trai, nhan manh all
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((gach_doc, gach_ngang)))
                     img_thumb.paste(img_anh, (1920-gach_doc, 0))
                 else:
@@ -752,7 +752,7 @@ if __name__ == "__main__":
             if typeanh==7 or typeanh==8 or typeanh==9 or typeanh==10:
                 # anh full man hinh, text trai, khong nhan manh
                 # tao anh
-                if paste_result.image_data is not None and (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1:
+                if (len(st.session_state['result_dict'][target_image_path]['bboxes'])) == 1 and cropped_image is not None:
                     img_anh = (cropped_image.resize((1920, 1080)))
                     img_thumb.paste(img_anh, (0, 0))
                 else:
@@ -834,20 +834,3 @@ if __name__ == "__main__":
                     f'{kichthuoc_font_nhanmanh},{khoachcach_chu},{khoachcach_chu_nhanmanh},{mau_chu},{mau_chu_nhanmanh},{can_le_chu},{can_le_chu_nhanmanh},{gach_doc},{gach_ngang},{do_day_vien_giua},{do_day_vien_ngoai},{start_text},{width_full_name},{height_full_name},{x_fullscreen},{y_fullscreen},{back_title_fullscreen}')
             st.session_state['list_profile'], st.session_state['list_profile_show'] = load_profile()
             st.experimental_rerun()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
